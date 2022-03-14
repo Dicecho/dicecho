@@ -1,0 +1,121 @@
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "sz_tsconvert": {
+          "tokenizer": "sz_tokenizer",
+          "char_filter": [
+            "tsconvert"
+          ],
+          "filter": [
+            "lowercase",
+            "asciifolding"
+          ]
+        }
+      },
+      "tokenizer": {
+        "sz_tokenizer": {
+          "type": "ngram",
+          "min_gram": 1,
+          "max_gram": 1,
+          "token_chars": [
+            "letter",
+            "digit"
+          ]
+        }
+      },
+      "char_filter": {
+        "tsconvert": {
+          "type": "stconvert",
+          "convert_type": "t2s"
+        }
+      }
+    }
+  },
+  "mappings": {
+    "properties": {
+      "title": {
+        "type": "text",
+        "analyzer": "sz_tsconvert",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "authorName": {
+        "type": "text",
+        "analyzer": "sz_tsconvert",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "originTitle": {
+        "type": "text",
+        "analyzer": "sz_tsconvert",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "foreignAuthor": {
+        "properties": {
+          "avatarUrl": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          },
+          "id": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          },
+          "nickName": {
+            "type": "text",
+            "analyzer": "sz_tsconvert",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          }
+        }
+      },
+      "description": {
+        "type": "text",
+        "analyzer": "sz_tsconvert",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "alias": {
+        "type": "text",
+        "analyzer": "sz_tsconvert",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      }
+    }
+  }
+}
