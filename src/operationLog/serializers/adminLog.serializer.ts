@@ -1,20 +1,21 @@
+import { BaseSerializer } from '@app/core';
 import { AdminLog as AdminLogDocument } from '@app/operationLog/schemas';
-import { BaseSerializer, serialize, isInstanceArray, BaseDocument } from '@app/core';
-import { getObjectId } from '@app/utils';
 import { User as UserDocument } from '@app/users/schemas/user.schema';
-import { SimpleUserSerializer, ISimpleUser } from '@app/users/serializers';
+import { toSimpleUser } from '@app/users/serializers';
+import { Expose } from 'class-transformer';
 import { ObjectId } from 'mongodb';
-import { IRateDto } from '@app/rate/dto';
-import { Exclude, Expose } from 'class-transformer';
 
 interface AdminLogSerializerCtx {
   user?: UserDocument;
 }
 
-class AdminLogSerializer extends BaseSerializer<AdminLogDocument, AdminLogSerializerCtx> {
+class AdminLogSerializer extends BaseSerializer<
+  AdminLogDocument,
+  AdminLogSerializerCtx
+> {
   constructor(
     partial: Partial<AdminLogDocument>,
-    context: Partial<AdminLogSerializerCtx> = { },
+    context: Partial<AdminLogSerializerCtx> = {},
   ) {
     super(partial, context);
     this.assignObject(partial);
@@ -33,15 +34,12 @@ class AdminLogSerializer extends BaseSerializer<AdminLogDocument, AdminLogSerial
   snapshot: any = {};
 
   @Expose()
-  get operator(): { _id: string; nickName: string; avatarUrl: string; } {
-    if (this._obj.operator instanceof ObjectId ) {
-      throw new Error('operation的user字段对象错误')
+  get operator(): { _id: string; nickName: string; avatarUrl: string } {
+    if (this._obj.operator instanceof ObjectId) {
+      throw new Error('operation的user字段对象错误');
     }
 
-    return serialize(
-      SimpleUserSerializer,
-      this._obj.operator,
-    ) as ISimpleUser
+    return toSimpleUser(this._obj.operator);
   }
 }
 

@@ -1,12 +1,10 @@
-import { 
-  Comment as CommentDocument,
-} from '@app/comment/schemas';
+import { Comment as CommentDocument } from '@app/comment/schemas';
 import { ObjectId } from 'mongodb';
 import { Expose } from 'class-transformer';
 import { BaseSerializer, serialize, isInstanceArray } from '@app/core';
 import { LikeableCtx, LikeableSerializer } from '@app/like/serializers';
 import { User as UserDocument } from '@app/users/schemas/user.schema';
-import { SimpleUserSerializer } from '@app/users/serializers';
+import { toSimpleUser } from '@app/users/serializers';
 
 
 export interface CommentSerializerCtx extends LikeableCtx {
@@ -74,10 +72,7 @@ class CommentSerializer extends BaseSerializer<CommentDocument, CommentSerialize
       throw new Error('comment的user字段对象错误')
     }
 
-    return serialize(
-      SimpleUserSerializer,
-      this._obj.user,
-    )
+    return toSimpleUser(this._obj.user);
   }
 
   @Expose()

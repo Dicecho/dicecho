@@ -32,6 +32,7 @@ import { TagModule } from './tag/tag.module';
 import { UserLikeModule } from './user-like/user-like.module';
 import { EventModule } from './event/event.module';
 import { RichtextModule } from './richtext/richtext.module';
+import { TokenModule } from './token/token.module';
 
 @Module({
   imports: [
@@ -92,6 +93,7 @@ import { RichtextModule } from './richtext/richtext.module';
     CollectionModule,
     EventModule,
     RichtextModule,
+    TokenModule,
   ],
   controllers: [AppController],
   providers: [

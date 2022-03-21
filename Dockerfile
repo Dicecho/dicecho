@@ -1,9 +1,11 @@
-FROM node:latest
+FROM node:16-alpine
 
-COPY ./ /home/app/
+ADD package.json yarn.lock /tmp/
+RUN cd /tmp && yarn --verbose
+RUN mkdir -p /home/app && cp -a /tmp/node_modules /home/app/
+
 WORKDIR /home/app
-RUN yarn --verbose
-
+COPY . /home/app
 RUN yarn build
 
 CMD yarn start:pm2
